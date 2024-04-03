@@ -1,3 +1,9 @@
+Assignment 4 CMPT 300
+
+Huynh Vuong The Nguyen (301450119)
+Leang Paul Kho (301563533)
+
+
 1) virtual memory in binary form  : 0001 0001 0001 0010 0011 0100 0101 0110
    page size = 2 ^ 12 
    page table size = 2^32 / 2^12 = 2^20 
