@@ -8,6 +8,7 @@ int main(int argc, char* argv[]) {
     bool lsl = false;
     bool lsi = false;
     char* dir = NULL;
+    bool multiFile = false;
 
     if (argc > 1) {
         for (int i = 1; i < argc; i++) {
@@ -23,7 +24,14 @@ int main(int argc, char* argv[]) {
                     }
                 }
             } else {
+                if (i + 1 < argc) {
+                    multiFile = true;
+                }
+
                 dir = argv[i];
+                if (multiFile) {
+                    printf("%s:\n", dir);
+                }
                 lsCommand(lsl, lsi, dir);
             }
         }
@@ -32,5 +40,7 @@ int main(int argc, char* argv[]) {
             lsCommand(lsl, lsi, ".");
         }
 
+    } else {
+        lsCommand(lsl, lsi, ".");
     }
 }

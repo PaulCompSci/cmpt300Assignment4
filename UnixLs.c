@@ -18,7 +18,6 @@
 
 
 void file_mode_to_string(mode_t mode, char str[]) {
-    // File type
     if (S_ISREG(mode)) {
         str[0] = '-';
     } else if (S_ISDIR(mode)) {
@@ -29,35 +28,43 @@ void file_mode_to_string(mode_t mode, char str[]) {
         str[0] = '?';
     }
 
-    // Owner permissions
     str[1] = (mode & S_IRUSR) ? 'r' : '-';
     str[2] = (mode & S_IWUSR) ? 'w' : '-';
-    str[3] = (mode & S_IXUSR) ? 'x' : '-';
+    if (mode & S_ISUID) {
+        str[3] = (mode & S_IXUSR) ? 's' : 'S'; 
+    } else {
+        str[3] = (mode & S_IXUSR) ? 'x' : '-';
+    }
 
-    // Group permissions
     str[4] = (mode & S_IRGRP) ? 'r' : '-';
     str[5] = (mode & S_IWGRP) ? 'w' : '-';
-    str[6] = (mode & S_IXGRP) ? 'x' : '-';
+    if (mode & S_ISGID) {
+        str[6] = (mode & S_IXGRP) ? 's' : 'S'; 
+    } else {
+        str[6] = (mode & S_IXGRP) ? 'x' : '-';
+    }
 
-    // Others permissions
     str[7] = (mode & S_IROTH) ? 'r' : '-';
     str[8] = (mode & S_IWOTH) ? 'w' : '-';
-    str[9] = (mode & S_IXOTH) ? 'x' : '-';
+    if (mode & S_ISVTX) {
+        str[9] = (mode & S_IXOTH) ? 't' : 'T';
+    } else {
+        str[9] = (mode & S_IXOTH) ? 'x' : '-';
+    }
 
-    // Null-terminate the string
+    
     str[10] = '\0';
 }
-
-
 
 void lsCommand(bool lsl, bool lsi, char* directory) {
     struct stat buf;
     struct dirent *dp;
     DIR* dir = opendir(directory);
 
-    // if (dir == NULL) {
-    //     if (lstat())
-    // }
+    if (dir == NULL) {
+        printf("Cannot open file directory. Please try again!!\n");
+        return;
+    }
 
     dp = readdir(dir);
     while (dp) {
@@ -70,7 +77,7 @@ void lsCommand(bool lsl, bool lsi, char* directory) {
         strcat(dirName, (char*)dp->d_name);
         if (lstat(dirName, &buf) == 0) {
             if (lsi) {
-            printf("%ju ", (uintmax_t)buf.st_ino);
+                printf("%ju ", (uintmax_t)buf.st_ino);
             }
             if (lsl) {
 
@@ -134,4 +141,5 @@ void lsCommand(bool lsl, bool lsi, char* directory) {
 		}
         dp = readdir(dir);
     }
+    printf("\n");
 }
