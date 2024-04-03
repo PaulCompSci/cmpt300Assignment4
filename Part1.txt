@@ -1,0 +1,17 @@
+1) virtual memory in binary form  : 0001 0001 0001 0010 0011 0100 0101 0110
+   page size = 2 ^ 12 
+   page table size = 2^32 / 2^12 = 2^20 
+   Therefore ,the high order 20 bit will which is  0001 0001 0001 0010 0011 will be the offset of the page table 
+   The low order 12 bit which is 0100 0101 0110 will be the offset into the  page 
+   The page table entry will provide the  frame number == 2^18 / 2^12 which is 2^6 bit and combine with the 12 bit offset above
+   we will get the physical address.
+   All of this work is done in hardware. 
+
+2)  page fault service time = 8 ms = 8 * 10^6 ns ( without modified) 
+    page fault service time = 20 ms = 20 * 10^6 ns ( with modified) 
+    Memory Access time  = 100 ns 
+    replace rate of a page = 70% 
+    page fault rate   = p
+    If we want the Effective Access Time  ( EAT ) no more than 200 ns , then the maximum acceptable page fault rate is 
+    EAT <= 200 ns --> 200 = p(0.7*20 * 10^6 + 0.3 * 8 * 10 ^ 6 ) + (1-p)*10
+    After calculation , p = 1/163999 , approx. 6.1 * 10^-6 %
