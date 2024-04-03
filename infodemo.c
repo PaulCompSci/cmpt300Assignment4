@@ -2,6 +2,7 @@
 #include <sys/types.h>
 #include <grp.h>
 #include <pwd.h>
+# include "infodemo.h"
 
 void getAndPrintGroup(gid_t grpNum) {
   struct group *grp;
@@ -9,7 +10,7 @@ void getAndPrintGroup(gid_t grpNum) {
   grp = getgrgid(grpNum); 
   
   if (grp) {
-    printf("The group ID %u -> %s\n", grpNum, grp->gr_name);
+    printf(" %s",  grp->gr_name);
   } else {
     printf("No group name for %u found\n", grpNum);
   }
@@ -23,7 +24,7 @@ void getAndPrintUserName(uid_t uid) {
   pw = getpwuid(uid);
 
   if (pw) {
-    printf("The user ID %u -> %s\n", uid, pw->pw_name);
+    printf(" %s ",  pw->pw_name);
   } else {
     perror("Hmm not found???");
     printf("No name found for %u\n", uid);
@@ -31,21 +32,21 @@ void getAndPrintUserName(uid_t uid) {
 }
 
 
-int main() {
+// int main() {
 
-  struct group *grp;
+//   struct group *grp;
 
-  getAndPrintGroup(1001);
-  getAndPrintGroup(514378);
-  getAndPrintGroup(103);
-  getAndPrintGroup(1000);
+//   getAndPrintGroup(1001);
+//   getAndPrintGroup(514378);
+//   getAndPrintGroup(103);
+//   getAndPrintGroup(1000);
   
-  getAndPrintUserName(59894);
-  getAndPrintUserName(23524);
-  getAndPrintUserName(20746);
-  getAndPrintUserName(5970);
-  getAndPrintUserName(10485);
+//   getAndPrintUserName(59894);
+//   getAndPrintUserName(23524);
+//   getAndPrintUserName(20746);
+//   getAndPrintUserName(5970);
+//   getAndPrintUserName(10485);
 
-	return 0;
+// 	return 0;
 
-}
+// }

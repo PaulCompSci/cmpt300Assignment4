@@ -13,5 +13,6 @@
 #include <limits.h>
 #include <stdint.h>
 #include <inttypes.h>
+# include "infodemo.h"
 
 void lsCommand(bool lsl, bool lsi, char* directory);
